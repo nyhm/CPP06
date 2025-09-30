@@ -119,22 +119,17 @@ void ScalarConverter::convertFromInt(int i) {
 }
 
 void ScalarConverter::convertFromFloat(float f) {
-    if (std::isnan(f) || std::isinf(f)) {
+    // Check if the value is within char range
+    if (f < 0 || f > 127) {
         std::cout << "char: impossible" << std::endl;
+    } else {
+        printChar(static_cast<char>(f));
+    }
+    // Check if the value is within int range
+    if (f < std::numeric_limits<int>::min() || f > std::numeric_limits<int>::max()) {
         std::cout << "int: impossible" << std::endl;
     } else {
-        // Check if the value is within char range
-        if (f < 0 || f > 127) {
-            std::cout << "char: impossible" << std::endl;
-        } else {
-            printChar(static_cast<char>(f));
-        }
-        // Check if the value is within int range
-        if (f < std::numeric_limits<int>::min() || f > std::numeric_limits<int>::max()) {
-            std::cout << "int: impossible" << std::endl;
-        } else {
-            printInt(static_cast<int>(f));
-        }
+        printInt(static_cast<int>(f));
     }
     // Check if the value is within float range
     if (f < -std::numeric_limits<float>::max() || f > std::numeric_limits<float>::max()) {
@@ -146,22 +141,17 @@ void ScalarConverter::convertFromFloat(float f) {
 }
 
 void ScalarConverter::convertFromDouble(double d) {
-    if (std::isnan(d) || std::isinf(d)) {
+    // Check if the value is within char range
+    if (d < 0 || d > 127) {
         std::cout << "char: impossible" << std::endl;
+    } else {
+        printChar(static_cast<char>(d));
+    }
+    // Check if the value is within int range
+    if (d < std::numeric_limits<int>::min() || d > std::numeric_limits<int>::max()) {
         std::cout << "int: impossible" << std::endl;
     } else {
-        // Check if the value is within char range
-        if (d < 0 || d > 127) {
-            std::cout << "char: impossible" << std::endl;
-        } else {
-            printChar(static_cast<char>(d));
-        }
-        // Check if the value is within int range
-        if (d < std::numeric_limits<int>::min() || d > std::numeric_limits<int>::max()) {
-            std::cout << "int: impossible" << std::endl;
-        } else {
-            printInt(static_cast<int>(d));
-        }
+        printInt(static_cast<int>(d));
     }
     // Check if the value is within float range
     if (d < -std::numeric_limits<float>::max() || d > std::numeric_limits<float>::max()) {
@@ -190,39 +180,19 @@ void ScalarConverter::printInt(int i) {
 }
 
 void ScalarConverter::printFloat(float f) {
-    if (std::isnan(f)) {
-        std::cout << "float: nanf" << std::endl;
-    } else if (std::isinf(f)) {
-        if (f > 0) {
-            std::cout << "float: +inff" << std::endl;
-        } else {
-            std::cout << "float: -inff" << std::endl;
-        }
+    std::cout << "float: " << f;
+    if (f == static_cast<int>(f)) {
+        std::cout << ".0f" << std::endl;
     } else {
-        std::cout << "float: " << f;
-        if (f == static_cast<int>(f)) {
-            std::cout << ".0f" << std::endl;
-        } else {
-            std::cout << "f" << std::endl;
-        }
+        std::cout << "f" << std::endl;
     }
 }
 
 void ScalarConverter::printDouble(double d) {
-    if (std::isnan(d)) {
-        std::cout << "double: nan" << std::endl;
-    } else if (std::isinf(d)) {
-        if (d > 0) {
-            std::cout << "double: +inf" << std::endl;
-        } else {
-            std::cout << "double: -inf" << std::endl;
-        }
+    std::cout << "double: " << d;
+    if (d == static_cast<int>(d)) {
+        std::cout << ".0" << std::endl;
     } else {
-        std::cout << "double: " << d;
-        if (d == static_cast<int>(d)) {
-            std::cout << ".0" << std::endl;
-        } else {
-            std::cout << std::endl;
-        }
+        std::cout << std::endl;
     }
 }

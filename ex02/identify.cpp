@@ -44,21 +44,21 @@ void identify(Base& p) {
         (void)a;
         std::cout << "A" << std::endl;
         return;
-    } catch (const std::bad_cast&) {}
+    } catch (...) {}
     
     try {
         B& b = dynamic_cast<B&>(p);
         (void)b;
         std::cout << "B" << std::endl;
         return;
-    } catch (const std::bad_cast&) {}
+    } catch (...) {}
     
     try {
         C& c = dynamic_cast<C&>(p);
         (void)c;
         std::cout << "C" << std::endl;
         return;
-    } catch (const std::bad_cast&) {}
+    } catch (...) {}
     
     std::cout << "Unknown type" << std::endl;
 }
