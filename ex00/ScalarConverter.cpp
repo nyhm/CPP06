@@ -16,12 +16,16 @@ ScalarConverter::~ScalarConverter() {}
 void ScalarConverter::convert(const std::string& literal) {
     if (isChar(literal)) {
         convertFromChar(literal[0]);
-    } else if (isInt(literal)) {
-        convertFromInt(static_cast<int>(std::strtol(literal.c_str(), NULL, 10)));
+    } else if (isSpecialFloat(literal)) {
+        convertFromFloat(static_cast<float>(std::strtod(literal.c_str(), NULL)));
+    } else if (isSpecialDouble(literal)) {
+        convertFromDouble(std::strtod(literal.c_str(), NULL));
     } else if (isFloat(literal)) {
         convertFromFloat(static_cast<float>(std::strtod(literal.c_str(), NULL)));
     } else if (isDouble(literal)) {
         convertFromDouble(std::strtod(literal.c_str(), NULL));
+    } else if (isInt(literal)) {
+        convertFromInt(static_cast<int>(std::strtol(literal.c_str(), NULL, 10)));
     } else {
         std::cout << "char: impossible" << std::endl;
         std::cout << "int: impossible" << std::endl;
@@ -131,12 +135,7 @@ void ScalarConverter::convertFromFloat(float f) {
     } else {
         printInt(static_cast<int>(f));
     }
-    // Check if the value is within float range
-    if (f < -std::numeric_limits<float>::max() || f > std::numeric_limits<float>::max()) {
-        std::cout << "float: impossible" << std::endl;
-    } else {
-        printFloat(f);
-    }
+    printFloat(f);
     printDouble(static_cast<double>(f));
 }
 
@@ -153,18 +152,8 @@ void ScalarConverter::convertFromDouble(double d) {
     } else {
         printInt(static_cast<int>(d));
     }
-    // Check if the value is within float range
-    if (d < -std::numeric_limits<float>::max() || d > std::numeric_limits<float>::max()) {
-        std::cout << "float: impossible" << std::endl;
-    } else {
-        printFloat(static_cast<float>(d));
-    }
-    // Check if the value is within double range
-    if (d < -std::numeric_limits<double>::max() || d > std::numeric_limits<double>::max()) {
-        std::cout << "double: impossible" << std::endl;
-    } else {
-        printDouble(d);
-    }
+    printFloat(static_cast<float>(d));
+    printDouble(d);
 }
 
 void ScalarConverter::printChar(char c) {
